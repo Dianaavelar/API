@@ -7,6 +7,8 @@ let db = [
     {'3': {Nome: 'Cliente 3', Idade: '40'}},
 ]
 
+
+
 routes.get('/',(req, res) => {
     return res.json(db)
 })

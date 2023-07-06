@@ -13,32 +13,71 @@
   "paths": {
     "/": {
       "get": {
-        "description": "",
+        "description": "Obtém informações principais",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "message": "Informações obtidas com sucesso."
+              }
+            }
           }
         }
       }
     },
     "/add": {
       "post": {
-        "description": "",
+        "description": "Adiciona novo item",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "message": "Item adicionado com sucesso."
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "examples": {
+              "application/json": {
+                "message": "Erro na requisição."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update": {
+      "put": {
+        "description": "Atualiza um item existente",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "message": "Item atualizado com sucesso."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json": {
+                "message": "Erro na requisição."
+              }
+            }
           }
         }
       }
     },
     "/{id}": {
       "delete": {
-        "description": "",
+        "description": "Exclui um item pelo ID",
         "parameters": [
           {
             "name": "id",
@@ -47,7 +86,24 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "message": "Item excluído com sucesso."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json": {
+                "message": "Erro na requisição."
+              }
+            }
+          }
+        }
       }
     }
   }

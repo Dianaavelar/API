@@ -1,41 +1,72 @@
-const express = require('express')
-const routes = express.Router()
+const express = require('express');
+const router = express.Router();
+const port = 3000;
 
 let db = [
-    {'1': {Nome: 'Cliente 1', Idade: '20'}},
-    {'2': {Nome: 'Cliente 2', Idade: '30'}},
-    {'3': {Nome: 'Cliente 3', Idade: '40'}},
-]
+  { '1': { Nome: 'Cliente 1', Idade: '20' } },
+  { '2': { Nome: 'Cliente 2', Idade: '30' } },
+  { '3': { Nome: 'Cliente 3', Idade: '40' } },
+];
 
 
+router.get('/', (req, res) => {
+  return res.json(db);
+});
 
-routes.get('/',(req, res) => {
-    return res.json(db)
-})
+router.post('/add', (req, res) => {
+  const body = req.body;
 
-routes.post('/add', (req, res) => {
-    const body = req.body
+  if (!body) {
+    return res.status(400).end();
+  }
 
-    if (!body)
-        return res.status(400).end()
+  db.push(body);
+  return res.json(body);
+});
 
-    
+router.put('/:id', (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
 
-db.push(body)
-return res.json(body)
+  if (!body) {
+    return res.status(400).end();
+  }
 
-})
+  let update = false;
 
-routes.delete('/:id', (req, res) =>{
-    const id = req.params.id
+  for (let i = 0; i < db.length; i++) {
+    if (db[i][id]) {
+      db[i][id] = body;
+      update = true;
+      break;
+    }
+  }
 
-    let newDB = db.filter(item => {
-        if (!item[id])
-        return item
-    })
+  if (update) {
+    return res.json({ message: 'Cliente atualizado com sucesso' });
+  } else {
+    return res.status(404).json({ message: 'Cliente não encontrado' });
+  }
+});
 
-    db = newDB
+router.delete('/:id', (req, res) => {
+  const id = req.params.id;
 
-} )
+  let deleted = false;
 
-module.exports = routes
+  for (let i = 0; i < db.length; i++) {
+    if (db[i][id]) {
+      db.splice(i, 1);
+      deleted = true;
+      break;
+    }
+  }
+
+  if (deleted) {
+    return res.json({ message: 'Cliente removido com sucesso' });
+  } else {
+    return res.status(404).json({ message: 'Cliente não encontrado' });
+  }
+});
+
+module.exports = router;
